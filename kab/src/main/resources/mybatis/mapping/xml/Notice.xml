@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace="dao接口的路径"-->
+<mapper namespace="com.accp.dao.NoticeDao">
+    <!--修改-->
+    <update id="modifyNotice">
+        UPDATE Notice
+        <set>
+            <if test="title !=null and title !=''">
+                title=#{title},
+            </if>
+            <if test="author !=null and author !=''">
+                author=#{author},
+            </if>
+            <if test="modifyTime !=null">
+                modifyTime=#{modifyTime},
+            </if>
+            <if test="level>0 and level!=null">
+                level=#{level},
+            </if>
+            <if test="content !=null and content !=''">
+                content=#{content}
+            </if>
+            WHERE id=#{id}
+        </set>
+    </update>
+    <!--查询一个-->
+    <select id="getone" resultType="Notice">
+        SELECT  * FROM Notice WHERE id=#{id}
+    </select>
+    <!--查询全部-->
+    <select id="listNotice" resultType="Notice">
+        SELECT  * FROM Notice
+        <where>
+            <if test="id>0 and id!=null">
+                id=#{id}
+            </if>
+            <if test="title !=null and title !=''">
+                AND title=#{title}
+            </if>
+            <if test="author !=null and author !=''">
+                AND author=#{author}
+            </if>
+            <if test="modifyTime !=null">
+                AND modifyTime=#{modifyTime}
+            </if>
+            <if test="level>0 and level!=null">
+                AND level=#{level}
+            </if>
+            <if test="content !=null and content !=''">
+                AND content=#{content}
+            </if>
+        </where>
+    </select>
+    <!--删除-->
+    <delete id="deleteNotice">
+        DELETE FROM Notice WHERE id=#{id}
+    </delete>
+    <!--新增-->
+    <insert id="addNotice">
+        INSERT INTO Notice VALUES (DEFAULT,#{titie},#{author},#{modifyTime},#{level},#{content})
+    </insert>
+</mapper>

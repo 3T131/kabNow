@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.accp.dao.StudentDao">
+    <insert id="insert">
+        INSERT INTO student
+        VALUES(#{studentNo},#{name},#{gender},#{age},#{major},#{gradeId})
+    </insert>
+    <update id="update">
+        update student
+        <set>
+            <if test="null!=name and ''!=name">name=#{name},</if>
+            <if test="null!=gender and ''!=gender">gender=#{gender},</if>
+            <if test="age>0">age=#{age},</if>
+            <if test="null!=major and ''!=major">major=#{major},</if>
+            <if test="gradeId>0">gradeId=#{gradeId},</if>
+        </set>
+        where studentNo=#{studentNo}
+    </update>
+    <delete id="delete">
+        delete student where studentNo=#{studentNo}
+    </delete>
+    <select id="get" resultType="Student">
+        select * from student where studentNo=#{studentNo}
+    </select>
+    <select id="list" resultType="Student">
+        select * from student
+        <where>
+            <if test="null!=studentNo and ''!=studentNo">and studentNo=#{studentNo}</if>
+            <if test="null!=name and ''!=name">and name=#{name}</if>
+            <if test="null!=gender and ''!=gender">and gender=#{gender}</if>
+            <if test="age>0">and age=#{age}</if>
+            <if test="null!=major and ''!=major">and major=#{major}</if>
+            <if test="gradeId>0">and gradeId=#{gradeId}</if>
+        </where>
+    </select>
+</mapper>

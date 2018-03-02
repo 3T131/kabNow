@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace="dao接口的路径"-->
+<mapper namespace="com.accp.dao.CourseDao">
+    <!--修改-->
+    <update id="modifyCourse">
+        UPDATE Course
+        <set>
+            <if test="title !=null and title !=''">
+                title=#{title},
+            </if>
+            <if test="author !=null and author !=''">
+                author=#{author},
+            </if>
+            <if test="modifyTime !=null">
+                modifyTime=#{modifyTime},
+            </if>
+            <if test="recommend>-1 and level!=recommend">
+                recommend=#{recommend},
+            </if>
+            <if test="content !=null and content !=''">
+                content=#{content}
+            </if>
+            WHERE id=#{id}
+        </set>
+    </update>
+    <!--查询一个-->
+    <select id="getone" resultType="Course">
+        SELECT  * FROM Course WHERE id=#{id}
+    </select>
+    <!--查询全部-->
+    <select id="listCourse" resultType="Course">
+        SELECT  * FROM Course
+        <where>
+            <if test="id>0 and id!=null">
+                id=#{id}
+            </if>
+            <if test="title !=null and title !=''">
+                AND title=#{title}
+            </if>
+            <if test="author !=null and author !=''">
+                AND author=#{author}
+            </if>
+            <if test="modifyTime !=null">
+                AND modifyTime=#{modifyTime}
+            </if>
+            <if test="recommend>-1 and recommend!=null">
+                AND level=#{recommend}
+            </if>
+            <if test="content !=null and content !=''">
+                AND content=#{content}
+            </if>
+        </where>
+    </select>
+    <!--删除-->
+    <delete id="deleteCourse">
+        DELETE FROM Course WHERE id=#{id}
+    </delete>
+    <!--新增-->
+    <insert id="addCourse">
+        INSERT INTO Course VALUES (DEFAULT,#{titie},#{author},#{modifyTime},#{recommend},#{content})
+    </insert>
+</mapper>

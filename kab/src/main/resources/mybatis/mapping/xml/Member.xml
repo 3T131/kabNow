@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.accp.dao.MemberDao">
+    <insert id="insert">
+        INSERT INTO member
+        VALUES(DEFAULT,#{userCode},#{name},#{teachTime},#{birthday},#{education},#{identityCard},#{telePhone},#{fixationPhone},#{address})
+    </insert>
+    <update id="update">
+        update member
+        <set>
+            <if test="null!=userCode and ''!=userCode">userCode=#{userCode},</if>
+            <if test="null!=name and ''!=name">name=#{name},</if>
+            <if test="teachTime>0">teachTime=#{teachTime},</if>
+            <if test="null!=birthday and ''!=birthday">birthday=#{birthday},</if>
+            <if test="education>0">education=#{education},</if>
+            <if test="null!=identityCard and ''!=identityCard">identityCard=#{identityCard},</if>
+            <if test="null!=telePhone and ''!=telePhone">telePhone=#{telePhone},</if>
+            <if test="null!=fixationPhone and ''!=fixationPhone">fixationPhone=#{fixationPhone},</if>
+            <if test="null!=address and ''!=address">address=#{address},</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete member where id=#{id}
+    </delete>
+    <select id="get" resultType="Member">
+        select * from member where id=#{id}
+    </select>
+
+    <select id="list" resultType="Member">
+        select * from member
+        <where>
+            <if test="id>0">and id=#{id}</if>
+            <if test="null!=userCode and ''!=userCode">and userCode=#{userCode}</if>
+            <if test="null!=name and ''!=name">and name=#{name}</if>
+            <if test="teachTime>0">and teachTime=#{teachTime}</if>
+            <if test="null!=birthday and ''!=birthday">and birthday=#{birthday}</if>
+            <if test="education>0">and education=#{education}</if>
+            <if test="null!=identityCard and ''!=identityCard">and identityCard=#{identityCard}</if>
+            <if test="null!=telePhone and ''!=telePhone">and telePhone=#{telePhone}</if>
+            <if test="null!=fixationPhone and ''!=fixationPhone">and fixationPhone=#{fixationPhone}</if>
+            <if test="null!=address and ''!=address">and address=#{address}</if>
+        </where>
+    </select>
+</mapper>

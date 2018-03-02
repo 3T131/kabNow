@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.accp.dao.ClassDao">
+    <insert id="insert">
+        INSERT INTO class
+        VALUES(default,#{name},#{teachId},#{school},#{type},#{status},#{createTime});
+    </insert>
+    <update id="update">
+        update class
+        <set>
+            <if test="null!=name and ''!=name">name=#{name},</if>
+            <if test="teachId>0">teachId=#{teachId},</if>
+            <if test="school>0">school=#{school},</if>
+            <if test="null!=type and ''!=type">name=#{type},</if>
+            <if test="null!=status and ''!=status">name=#{status},</if>
+            <if test="null!=createTime and ''!=createTime">createTime=#{createTime},</if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete class where id=#{id}
+    </delete>
+    <select id="get" resultType="Class">
+        select * from class where id=#{id}
+    </select>
+    <select id="list" resultType="Class">
+        select * from class
+        <where>
+            <if test="id>0">and if=#{id}</if>
+            <if test="null!=name and ''!=name">and name=#{name}</if>
+            <if test="teachId>0">and teachId=#{teachId}</if>
+            <if test="school>0">and school=#{school}</if>
+            <if test="null!=type and ''!=type">and name=#{type}</if>
+            <if test="null!=status and ''!=status">and name=#{status}</if>
+            <if test="null!=createTime and ''!=createTime">and createTime=#{createTime}</if>
+        </where>
+    </select>
+</mapper>

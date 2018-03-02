@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.accp.dao.UserDao">
+    <insert id="insert">
+        INSERT INTO `user` VALUES(#{userCode},#{pwd},#{email},#{encryptedQuestion},#{encryptedAnswer},#{status})
+    </insert>
+    <update id="update">
+        update `user`
+        <set>
+            <if test="null!=pwd and ''!=pwd">pwd=#{pwd},</if>
+            <if test="null!=email and ''!=email">email=#{email},</if>
+            <if test="null!=encryptedQuestion and ''!=encryptedQuestion">encryptedQuestion=#{encryptedQuestion},</if>
+            <if test="null!=encryptedAnswer and ''!=encryptedAnswer">encryptedAnswer=#{encryptedAnswer},</if>
+            <if test="status>0">status=#{status},</if>
+        </set>
+        where userCode=#{userCode}
+    </update>
+    <delete id="delete">
+        delete `user` where userCode=#{userCode}
+    </delete>
+    <select id="get" resultType="User">
+        select * from `user` where userCode=#{userCode}
+    </select>
+    <select id="list" resultType="User">
+        select * from `user`
+        <where>
+            <if test="null!=userCode and ''!=userCode">and userCode=#{userCode}</if>
+            <if test="status>0">and status=#{status}</if>
+        </where>
+    </select>
+</mapper>

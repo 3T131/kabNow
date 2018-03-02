@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace="dao接口的路径"-->
+<mapper namespace="com.accp.dao.NoticeLevelDao">
+    <update id="modifyLevel">
+        UPDATE NoticeLevel
+        <set>
+            <if test="name !=null and name !=''">
+                name=#{name}
+            </if>
+            WHERE id=#{id}
+        </set>
+    </update>
+    <select id="listLevel" resultType="NoticeLevel">
+        SELECT  * FROM NoticeLevel
+        <where>
+            <if test="id>0 and id!=null">
+                id=#{id}
+            </if>
+            <if test="name !=null and name !=''">
+                AND name=#{name}
+            </if>
+        </where>
+    </select>
+
+</mapper>
